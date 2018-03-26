@@ -1,19 +1,32 @@
-# multithreadedObjectDetectionFromIPCam
-A multithreaded object detection cnn, using inception_v2 and tensorflow, along with openCV, with input from IPCam
+# Object-Detector-App
 
-To Use:  
+A real-time object recognition application using [Google's TensorFlow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) and [OpenCV](http://opencv.org/).
 
-1. Follow the steps here to download all system dependencies, create a python virtual environment, and compile/install openCV. This tutorial also walks you through installing keras, a higher level tensorflow wrapper, which is not needed for this project, but there is no harm in installing keras.  
-https://www.pyimagesearch.com/2017/09/25/configuring-ubuntu-for-deep-learning-with-python/  
+## Getting Started
+1. `conda env create -f environment.yml`
+2. `python object_detection_app.py`
+    Optional arguments (default value):
+    * Device index of the camera `--source=0`
+    * Width of the frames in the video stream `--width=480`
+    * Height of the frames in the video stream `--height=360`
+    * Number of workers `--num-workers=2`
+    * Size of the queue `--queue-size=5`
 
-2. Download this repository, which is largely based on:  
-https://github.com/datitran/object_detector_app and https://towardsdatascience.com/building-a-real-time-object-recognition-app-with-tensorflow-and-opencv-b7a2b4ebdc32  
+## Tests
+```
+pytest -vs utils/
+```
 
-3. Download the IPCam Android app onto your Android phone, and start the IPCam server  
+## Requirements
+- [Anaconda / Python 3.5](https://www.continuum.io/downloads)
+- [TensorFlow 1.2](https://www.tensorflow.org/)
+- [OpenCV 3.0](http://opencv.org/)
 
-4. Run the object_detection_multithreading.py script with arguements:  
-    IP addr of the IPCam server --source='0.0.0.0:8080'  
-    Width of the frames in the video stream --width=480  
-    Height of the frames in the video stream --height=360  
-    Number of workers --num-workers=2  
-    Size of the queue --queue-size=5  
+## Notes
+- OpenCV 3.1 might crash on OSX after a while, so that's why I had to switch to version 3.0. See open issue and solution [here](https://github.com/opencv/opencv/issues/5874).
+- Moving the `.read()` part of the video stream in a multiple child processes did not work. However, it was possible to move it to a separate thread.
+
+## Copyright
+
+See [LICENSE](LICENSE) for details.
+Copyright (c) 2017 [Dat Tran](http://www.dat-tran.com/).
