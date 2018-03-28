@@ -11,12 +11,14 @@ https://github.com/datitran/object_detector_app and https://towardsdatascience.c
 
 3. Download the IPCam Android app onto your Android phone, and start the IPCam server  
 
-4. Run the object_detection_multithreading.py script with arguements:  
+4. Run the object_detection_multithreading.py script with arguments:  
     IP addr of the IPCam server --source='0.0.0.0:8080'  
     Width of the frames in the video stream --width=480  
     Height of the frames in the video stream --height=360  
     Number of workers --num-workers=2  
     Size of the queue --queue-size=5  
+    
+5. Run the receiver.py to listen to the correct IP address and show pbject detection output  
 
 ## Copyright
 
