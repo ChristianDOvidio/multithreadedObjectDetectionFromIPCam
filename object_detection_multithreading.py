@@ -4,6 +4,7 @@ import time
 import argparse
 import numpy as np
 import tensorflow as tf
+from socket import *
 
 from queue import Queue
 from threading import Thread
@@ -22,6 +23,12 @@ PATH_TO_LABELS = os.path.join(CWD_PATH, 'object_detection', 'data',
                               'mscoco_label_map.pbtxt')
 
 NUM_CLASSES = 90
+
+host = "000.000.0.0"
+#IP addr of this computer
+port = 10000
+addr = (host, port)
+buf = 1024
 
 # Loading label map
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
@@ -85,6 +92,18 @@ def worker(input_q, output_q):
     sess.close()
 
 
+def sendFile(fName):
+    s = socket(AF_INET, SOCK_DGRAM)
+    s.sendto(fName.encode(), addr)
+    f = open(fName, "rb")
+    data = f.read(buf)
+    while data:
+        if (s.sendto(data, addr)):
+            data = f.read(buf)
+    f.close()
+    s.close()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -93,7 +112,7 @@ if __name__ == '__main__':
         dest='video_source',
         type=str,
         default='0.0.0.0:8080',
-        help='IP addr of the IPCam server.')
+        help='IP addr and port of the IPCam server.')
     parser.add_argument(
         '-wd',
         '--width',
@@ -123,6 +142,7 @@ if __name__ == '__main__':
         height=args.height).start()
     fps = FPS().start()
 
+    lastTime = (time.time() - 30)
     while True:
         frame = video_capture.read()
         input_q.put(frame)
@@ -152,7 +172,19 @@ if __name__ == '__main__':
                 cv2.putText(frame, name[0], (int(point['xmin'] * args.width),
                                              int(point['ymin'] * args.height)),
                             font, 0.3, (0, 0, 0), 1)
-            cv2.imshow('Video', frame)
+                cv2.imwrite("img.jpg", frame)
+                sendFile("img.jpg")
+                '''
+                if name[0][:6] == 'person':
+                    print("Person Found")
+                    if (time.time() - lastTime) > 30:
+                        #30 sec has passed since last image save
+                        #lastTime = time.time()
+                        #cv2.imwrite("img.jpg", frame)
+                        #sendFile("img.jpg")
+                '''
+
+            #cv2.imshow('Video', frame)
 
         fps.update()
 
