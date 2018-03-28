@@ -24,11 +24,11 @@ PATH_TO_LABELS = os.path.join(CWD_PATH, 'object_detection', 'data',
 
 NUM_CLASSES = 90
 
-host = "000.000.0.0"
 #IP addr of this computer
 port = 10000
-addr = (host, port)
 buf = 1024
+video_dest = '0.0.0.0'
+addr = (video_dest, port)
 
 # Loading label map
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
@@ -114,6 +114,13 @@ if __name__ == '__main__':
         default='0.0.0.0:8080',
         help='IP addr and port of the IPCam server.')
     parser.add_argument(
+        '-des',
+        '--destination',
+        dest='video_dest',
+        type=str,
+        default='0.0.0.0',
+        help='IP addr of this computer')
+    parser.add_argument(
         '-wd',
         '--width',
         dest='width',
@@ -129,6 +136,7 @@ if __name__ == '__main__':
         help='Height of the frames in the video stream.')
     args = parser.parse_args()
 
+    addr = (video_dest, port)
     input_q = Queue(5)  # fps is better if queue is higher but then more lags
     output_q = Queue()
     for i in range(1):
