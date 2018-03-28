@@ -2,8 +2,19 @@
 import socket
 import numpy as np
 import cv2
+import argparse
 
-host = "000.000.0.0"
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument(
+    "-src",
+    type=str,
+    help=
+    "IP address of the computer performing the object detection ex: 192.169.0.1"
+)
+args = vars(ap.parse_args())
+
+host = args["src"]
 #IP address of computer that is broadcasting
 port = 10000
 buf = 1024
