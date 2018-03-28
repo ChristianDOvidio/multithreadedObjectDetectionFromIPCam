@@ -18,7 +18,7 @@ https://github.com/datitran/object_detector_app and https://towardsdatascience.c
     Number of workers --num-workers=2  
     Size of the queue --queue-size=5  
     
-5. Run the receiver.py to listen to the correct IP address and show pbject detection output  
+5. Run the receiver.py to listen to the correct IP address and show the object detection output  
 
 ## Copyright
 
