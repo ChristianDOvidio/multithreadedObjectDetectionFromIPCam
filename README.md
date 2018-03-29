@@ -11,7 +11,9 @@ https://github.com/datitran/object_detector_app and https://towardsdatascience.c
 
 3. Download the IPCam Android app onto your Android phone, and start the IPCam server  
 
-4. Run the object_detection_multithreading.py script with arguments:  
+4. Install tkinter for python3 to use the tkinter GUI
+
+5. Run the object_detection_multithreading.py script with arguments:  
     IP addr and port of the IPCam server --source/-src='0.0.0.0:8080'
     IP addr of the this computer --destination/-dst='0.0.0.0'
     Width of the frames in the video stream --width=480  
@@ -19,8 +21,10 @@ https://github.com/datitran/object_detector_app and https://towardsdatascience.c
     Number of workers --num-workers=2  
     Size of the queue --queue-size=5  
     
-5. Run the receiver.py to listen to the correct IP address and show the object detection output with arguements:  
+6. Run the receiver.py to listen to the correct IP address and show the object detection output with arguements:  
     IP addr of the computer broadcasting the object recognition images -src='0.0.0.0'
+    
+7. Run gui.py to display the object detection stream in a tkinter gui for easy editing
 
 ## Copyright
 
