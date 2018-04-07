@@ -9,13 +9,13 @@ https://www.pyimagesearch.com/2017/09/25/configuring-ubuntu-for-deep-learning-wi
 2. Download this repository, which is largely based on:  
 https://github.com/datitran/object_detector_app and https://towardsdatascience.com/building-a-real-time-object-recognition-app-with-tensorflow-and-opencv-b7a2b4ebdc32  
 
-3. Download the IPCam Android app onto your Android phone, and start the IPCam server  
+3. Install tkinter for python3 to use the tkinter GUI
 
-4. Install tkinter for python3 to use the tkinter GUI
+4. Download the IPCam Android app onto your Android phone, and start the IPCam server  
 
-5. Run the object_detection_multithreading.py script with arguments:  
-    IP addr and port of the IPCam server --source/-src='0.0.0.0:8080'
-    IP addr of the this computer --destination/-dst='0.0.0.0'
+5. Run the object_detection_multithreading.py script (using workon dl4cv) with arguments:  
+    IP addr and port of the IPCam server --source/-src='0.0.0.0:8080'  
+    IP addr of the this computer --destination/-dst='0.0.0.0'  
     Width of the frames in the video stream --width=480  
     Height of the frames in the video stream --height=360  
     Number of workers --num-workers=2  
