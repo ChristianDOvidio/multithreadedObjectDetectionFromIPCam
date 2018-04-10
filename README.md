@@ -15,7 +15,7 @@ https://github.com/datitran/object_detector_app and https://towardsdatascience.c
 
 5. Run the object_detection_multithreading.py script (using workon dl4cv) with arguments:  
     IP addr and port of the IPCam server --source/-src='0.0.0.0:8080'  
-    IP addr of the this computer --destination/-dst='0.0.0.0'  
+    IP addr of the destination computer --destination/-dst='0.0.0.0'  
     Width of the frames in the video stream --width=480  
     Height of the frames in the video stream --height=360  
     Number of workers --num-workers=2  
