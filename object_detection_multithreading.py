@@ -24,11 +24,8 @@ PATH_TO_LABELS = os.path.join(CWD_PATH, 'object_detection', 'data',
 
 NUM_CLASSES = 90
 
-#IP addr of this computer
 port = 10000
 buf = 1024
-video_dest = '0.0.0.0'
-addr = (video_dest, port)
 
 # Loading label map
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
@@ -92,14 +89,14 @@ def worker(input_q, output_q):
     sess.close()
 
 
-def sendFile(fName):
+def sendFile(fName, destAddr):
     s = socket(AF_INET, SOCK_DGRAM)
-    s.sendto(fName.encode(), addr)
     f = open(fName, "rb")
     data = f.read(buf)
     while data:
-        if (s.sendto(data, addr)):
+        if (s.sendto(data, destAddr)):
             data = f.read(buf)
+
     f.close()
     s.close()
 
@@ -108,18 +105,16 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-src',
-        '--source',
         dest='video_source',
         type=str,
         default='0.0.0.0:8080',
         help='IP addr and port of the IPCam server.')
     parser.add_argument(
         '-des',
-        '--destination',
         dest='video_dest',
         type=str,
         default='0.0.0.0',
-        help='IP addr of this computer')
+        help='IP addr and port of the target computer')
     parser.add_argument(
         '-wd',
         '--width',
@@ -136,7 +131,7 @@ if __name__ == '__main__':
         help='Height of the frames in the video stream.')
     args = parser.parse_args()
 
-    addr = (video_dest, port)
+    destAddr = (args.video_dest, port)
     input_q = Queue(5)  # fps is better if queue is higher but then more lags
     output_q = Queue()
     for i in range(1):
@@ -181,18 +176,7 @@ if __name__ == '__main__':
                                              int(point['ymin'] * args.height)),
                             font, 0.3, (0, 0, 0), 1)
                 cv2.imwrite("img.jpg", frame)
-                sendFile("img.jpg")
-                '''
-                if name[0][:6] == 'person':
-                    print("Person Found")
-                    if (time.time() - lastTime) > 30:
-                        #30 sec has passed since last image save
-                        #lastTime = time.time()
-                        #cv2.imwrite("img.jpg", frame)
-                        #sendFile("img.jpg")
-                '''
-
-            #cv2.imshow('Video', frame)
+                sendFile("img.jpg", destAddr)
 
         fps.update()
 
