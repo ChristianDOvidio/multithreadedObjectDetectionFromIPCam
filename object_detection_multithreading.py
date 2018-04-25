@@ -110,7 +110,7 @@ if __name__ == '__main__':
         default='0.0.0.0:8080',
         help='IP addr and port of the IPCam server.')
     parser.add_argument(
-        '-des',
+        '-dst',
         dest='video_dest',
         type=str,
         default='0.0.0.0',
